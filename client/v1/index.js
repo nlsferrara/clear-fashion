@@ -34,6 +34,43 @@ console.log(MY_FAVORITE_BRANDS[0]);
 // 1. Create a new variable and assign it the link of the cheapest t-shirt
 // I can find on these e-shops
 // 2. Log the variable
+// 🎯 TODO 1: The cheapest t-shirt
+
+/*
+const allTShirts = [];
+MY_FAVORITE_BRANDS.forEach((brand) => {
+  fetch(brand.url)
+    .then(response => response.text())
+    .then(data => {
+      const { DOMParser } = require('xmldom');
+      const parser = new DOMParser();
+      const htmlDoc = parser.parseFromString(data, 'text/html');
+      const tShirts = Array.from(htmlDoc.querySelectorAll('li.t-shirt'));
+      tShirts.forEach((tShirt) => {
+        const price = tShirt.querySelector('.price').textContent.trim();
+        const match = price.match(/\d+/);
+        if (match) {
+          allTShirts.push({
+            brand: brand.name,
+            name: tShirt.querySelector('.name').textContent.trim(),
+            link: tShirt.querySelector('.name > a').href,
+            price: Number(match[0]),
+          });
+        }
+      });
+      if (brand === MY_FAVORITE_BRANDS[MY_FAVORITE_BRANDS.length - 1]) {
+        // We have processed all brands, let's find the cheapest t-shirt
+        allTShirts.sort((a, b) => a.price - b.price);
+        const cheapestTShirtLink = allTShirts[0].link;
+        console.log('The cheapest t-shirt link:', cheapestTShirtLink);
+      }
+    });
+});
+*/
+
+const cheapestTShirtLink = 'https://www.faguo-store.com/fr/vetements/7606-arcy-t-shirt-en-coton-recycle-kaki.html';
+console.log('The cheapest t-shirt link:', cheapestTShirtLink);
+      
 
 /**
  * 👕
