@@ -3,72 +3,202 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>👕 Clear Fahion | Environmentally & human-friendly clothes</title>
+    <style>
+
+      .star {
+        visibility:hidden;
+        font-size:20px;
+        cursor:pointer;
+        display: inline-block; 
+        position: relative;
+        top: -8px;
+        color: rgb(241, 202, 101);
+        }
+        .star:before {
+          content: "\2605";
+          visibility:visible;
+        }
+        .star:checked:before {
+          content: "\2606";
+        }
+      
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        color: #333;
+        background-color: #f5f5f5;
+      }
+      
+      h1 {
+        font-size: 32px;
+        text-align: center;
+        margin: 20px 0;
+      }
+      
+      section {
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 2px #ccc;
+      }
+      
+      #options {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      label {
+        margin-right: 10px;
+      }
+      
+      select, button {
+        font-size: 16px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        background-color: #fff;
+        cursor: pointer;
+      }
+      
+      button {
+        background-color: #4CAF50;
+        color: #fff;
+      }
+      
+      #indicators {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+      }
+      
+      #indicators div {
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 2px #ccc;
+        text-align: center;
+        flex-basis: 300px;
+      }
+      
+      #products {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      
+      .product {
+        margin: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 2px #ccc;
+        flex-basis: 300px;
+        text-align: center;
+      }
+      
+      .product img {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+      }
+      
+      .product h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+      }
+      
+      .product p {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+    </style>
   </head>
   <body>
-    <h1>Clear fashion</h1>
-    <section id="options">
-      <div id="show">
-        <label for="show-select">Show:</label>
-        <select name="show" id="show-select">
-          <option value="12">12</option>
-          <option value="24">24</option>
-          <option value="48">48</option>
-        </select>
-      </div>
-      <div id="page">
-        <label for="page-select">Go to page:</label>
-        <select name="page" id="page-select"> </select>
-      </div>
-      <div id="filters">
-        <span>By reasonable price</span>
-        <span>By recently released</span>
-        <div id="brand">
-          <label for="brand-select">By brands:</label>
-          <select name="brand" id="brand-select"> </select>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Clear fashion</h1>
+      <section id="options">
+        <div id="show">
+          <label for="show-select">Show:</label>
+          <select name="show" id="show-select">
+            <option value="12">12</option>
+            <option value="24">24</option>
+            <option value="48">48</option>
+          </select>
         </div>
-      </div>
-      <div id="sort">
-        <label for="sort-select">Sort:</label>
-        <select name="sort" id="sort-select">
-          <option value="price-asc">Cheaper</option>
-          <option value="price-desc">Expensive</option>
-          <option value="date-asc">Recently released</option>
-          <option value="date-desc">Anciently released</option>
-        </select>
-      </div>
-    </section>
-    <section id="indicators">
-      <h2>Indicators</h2>
-      <div>
-        <span>Number of products</span>
-        <span id="nbProducts">0</span>
-      </div>
-      <div>
-        <span>Number of brands</span>
-        <span id="nbBrands">0</span>
-      </div>
-      <div>
-        <span>Number of new products</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>p50 price value</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>p90 price value</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>p95 price value</span>
-        <span>0</span>
-      </div>
-      <div>
-        <span>Last released date</span>
-        <span>2020-01-01</span>
-      </div>
-    </section>
-    <section id="products"></section>
+        <div id="page">
+          <label for="page-select">Go to page:</label>
+          <select name="page" id="page-select"> </select>
+        </div>
+        <div id="filters">
+          <label for="price-select"></label>
+          <button type="button" id="price-select">By reasonable price</button>
+          <label for="released-select"></label>
+          <button type="button" id="released-select">By recently released</button>
+          <div id="brand">
+            <label for="brand-select">By brands:</label>
+            <select name="brand" id="brand-select"> </select>
+          </div>
+        </div>
+        <div id="sort">
+          <label for="sort-select">Sort:</label>
+          <select name="sort" id="sort-select">
+            <option value="none">Any</option>
+            <option value="price-asc">Cheaper</option>
+            <option value="price-desc">Expensive</option>
+            <option value="date-asc">Recently released</option>
+            <option value="date-desc">Anciently released</option>
+          </select>
+        </div>
+      </section>
+      <section id="indicators">
+        <h2>Indicators</h2>
+        <div>
+          <span>Number of products</span>
+          <span id="nbProducts">0</span>
+        </div>
+        <div>
+          <span>Number of brands</span>
+          <span id="nbBrands">0</span>
+        </div>
+        <div>
+          <span>Number of new products</span>
+          <span id="nbNewProducts">0</span>
+        </div>
+        <div>
+          <span>p50 price value</span>
+          <span id="p50">0</span>
+        </div>
+        <div>
+          <span>p90 price value</span>
+          <span id="p90">0</span>
+        </div>
+        <div>
+          <span>p95 price value</span>
+          <span id="p95">0</span>
+        </div>
+        <div>
+          <span>Last released date</span>
+          <span id="lastReleasedDate">2020-01-01</span>
+        </div>
+      </section>
+      <section id="products"></section>
+    </main>
+    <footer>
+      <p>© 2023 Clear Fashion. All rights reserved.</p>
+    </footer>
     <script type="text/javascript" charset="UTF-8" src="portfolio.js"></script>
   </body>
 </html>
