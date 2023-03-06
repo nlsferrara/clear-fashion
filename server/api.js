@@ -57,13 +57,6 @@ app.get('/products/:id', async (request, response) => {
 
   }
 });
-// This endpoint accepts the following optional query string parameters:
-// limit - number of products to return (default: 12)
-// brand - filter by brand (default: All brands)
-// price - filter by price (default: All price)
-
-
-
 
 app.get('/search', async (request, response) => {
   try{
