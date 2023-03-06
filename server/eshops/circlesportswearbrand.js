@@ -1,3 +1,19 @@
+function uuidv4() { // Public Domain/MIT
+    var d = new Date().getTime();//Timestamp
+    var d2 = ((typeof performance !== 'undefined') && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16;//random number between 0 and 16
+        if(d > 0){//Use timestamp until depleted
+            r = (d + r)%16 | 0;
+            d = Math.floor(d/16);
+        } else {//Use microseconds since page-load if supported
+            r = (d2 + r)%16 | 0;
+            d2 = Math.floor(d2/16);
+        }
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+  }
+
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
@@ -9,24 +25,67 @@ const cheerio = require('cheerio');
 const parse = data => {
   const $ = cheerio.load(data);
 
-  return $('#product-grid .grid__item')
+  var items = [];
+  items.push(...$('li.grid__item')
     .map((i, element) => {
-      const name = $(element)
-        .find('.full-unstyled-link')
+      const image = "https:" + $(element)
+        .find('img')[0].attribs['src']
+      var images = Object.values($(element).find('.media-pool img.motion-reduce').map((i, e) => e.attribs['data-src']));
+      var link = "https://shop.circlesportswear.com" + $(element)
+        .find('h3.h5 .full-unstyled-link')
+        .attr('href');
+      var name = $(element)
+        .find('h3.h5 .full-unstyled-link')
         .text()
         .trim()
-        .replace(/\s/g, ' ')
-        .split("   ")[0];
-      const price = parseInt(
-        $(element)
+        .replace(/\s/g, ' ');
+      var price = $(element)
           .find('.money')
           .text()
-          .split("€")[1]
-      );
-
-      return {name, price};
+          .split('€');
+      price = parseFloat(price[price.length - 1].replace(',', '.'));
+      var colorArray = $(element)
+          .find('.color-variant');
+      var colorArrayFinal = [];
+      var colorArrayFinalUrl = [];
+      for(i = 0; i < colorArray.length; i++) {
+        colorArrayFinal.push(colorArray[i].attribs['data-color']);
+        colorArrayFinalUrl.push(colorArray[i].attribs['data-url']);
+      }
+      colorArray = colorArrayFinal;
+      var imagesFinal = [];
+      colorArrayFinal.forEach(item => {
+        imagesFinal.push(images.filter(obj => !("" + obj).startsWith("<!DOCTYPE html>") && ("" + obj).includes(item.toLowerCase().replace(" ", "_") + "_1"))[0]);
+      });
+      if(colorArray.length == 1) {
+        name = name + " " + colorArray[0];
+        link += colorArrayFinalUrl[0];
+      }
+      else if(colorArray.length > 1) {
+        for(i = 1; i < colorArray.length; i++) {
+          var today = new Date().toLocaleString().substr(0, 10).split("/")
+          var item = {
+            image: "https:" + imagesFinal[i],
+            link: link + colorArrayFinalUrl[i],
+            name: name + " " + colorArray[i],
+            price: price,
+            scrapDate: today[1] + "-" + today[0] + "-" + today[2],
+            brand: "Circle Sportswear",
+            uuid: uuidv4()
+          };
+          items.push(item);
+        }
+        name = name + " " + colorArray[0];
+        link += colorArrayFinalUrl[0];
+      }
+          var today = new Date().toLocaleString().substr(0, 10).split("/")
+          const scrapDate = today[1] + "-" + today[0] + "-" + today[2];
+          const brand = "Circle Sportswear";
+          const uuid = uuidv4();
+          return {image, link, name, price, scrapDate, brand, uuid};
     })
-    .get();
+    .get());
+  return items;
 };
 
 /**

@@ -196,7 +196,7 @@ As a user
 I want to filter by brands name
 So that I can browse product for a specific brand */
 selectBrand.addEventListener('change', async (event) => {
-  const products = await fetchProducts(currentPagination.currentPage);
+  const products = await fetchProducts(1,currentPagination.count);
   
   if(event.target.value != 'all'){
     products.result = products.result.filter(product => product.brand == event.target.value);
