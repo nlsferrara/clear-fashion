@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
-const { connect } = require('http2');
 
 var client, db, collection;
 const MONGODB_DB_NAME = 'clearfashion';
