@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const {MongoClient,ObjectId} = require('mongodb');
 const MONGODB_DB_NAME = 'clearfashion';
+const MONGODB_URI=`mongodb+srv://${auth.username}:${auth.password}@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
 
 const port = 8092||process.env.PORT;
 
@@ -27,8 +28,7 @@ async function connectToMongo() {
   const auth = JSON.parse(fs.readFileSync("../auth.json"));
 
   // Connection URL
-  const uri = `mongodb+srv://${auth.username}:${auth.password}@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
-
+  const uri = MONGODB_URI
   // Create a new MongoClient
   client = new MongoClient(uri);
 
@@ -80,6 +80,6 @@ app.get('/search', async (request, response) => {
   }
 });
 
-app.listen(PORT);
+app.listen(port);
 
 console.log(`📡 Running on port ${port}`);
