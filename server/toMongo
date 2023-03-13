@@ -42,31 +42,17 @@ async function insertProducts() {
     console.log('Adding files: ', files);
     // loop through all the files and insert them
     let products;
+    
     // read the file
     products = JSON.parse(fs.readFileSync(`./server/exports/${files[0]}`));
-    // modif key name
-    products.map(product => {
-        product._id=product.uuid;
-        delete product.uuid;
-    });
     // insert the products
     await collection.insertMany(products);
     // read the file
     products = JSON.parse(fs.readFileSync(`./server/exports/${files[1]}`));
-    // modif key name
-    products.map(product => {
-        product._id=product.uuid;
-        delete product.uuid;
-    });
     // insert the products
     await collection.insertMany(products);
     // read the file
     products = JSON.parse(fs.readFileSync(`./server/exports/${files[2]}`));
-    // modif key name
-    products.map(product => {
-        product._id=product.uuid;
-        delete product.uuid;
-    });
     // insert the products
     await collection.insertMany(products);
     console.log('Done');

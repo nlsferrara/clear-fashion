@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node server/api.js"
+  },
   "dependencies": {
     "htmlparser": "^1.7.7",
     "htmlparser2": "^8.0.1",
