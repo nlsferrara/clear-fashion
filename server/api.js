@@ -3,10 +3,10 @@ const express = require('express');
 const helmet = require('helmet');
 const fs = require('fs');
 
-const {MongoClient} = require('mongodb');
+const {MongoClient,ObjectId} = require('mongodb');
 const MONGODB_DB_NAME = 'clearfashion';
 
-const PORT = 8092;
+const port = 8092||process.env.PORT;
 
 const app = express();
 
@@ -50,7 +50,7 @@ app.get('/products/:id', async (request, response) => {
   try{
     await connectToMongo();
     const id = request.params.id;
-    const serchresult = await collection.findOne({_id: id});
+    const serchresult = await collection.findOne({_id: ObjectId(id)});
     response.send(serchresult);
   } catch (error) {
     console.log(error);
@@ -82,4 +82,4 @@ app.get('/search', async (request, response) => {
 
 app.listen(PORT);
 
-console.log(`📡 Running on port ${PORT}`);
+console.log(`📡 Running on port ${port}`);
