@@ -27,7 +27,7 @@ async function connectToMongo() {
   const auth = JSON.parse(fs.readFileSync("../auth.json"));
 
   // Connection URL
-  const uri = `mongodb+srv://${auth.username}:${auth.password}@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
+  const uri = `mongodb+srv://nico:paula@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
 
   // Create a new MongoClient
   client = new MongoClient(uri);
