@@ -23,11 +23,8 @@ app.get('/', (request, response) => {
 });
 
 async function connectToMongo() {
-  // Read the username and password from auth.json
-  const auth = JSON.parse(fs.readFileSync("../auth.json"));
-
   // Connection URL
-  const uri = `mongodb+srv://nico:paula@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
+  const uri = `mongodb+srv://nico:test@clearfashion.xamlsbk.mongodb.net/test?retryWrites=true&w=majority`;
 
   // Create a new MongoClient
   client = new MongoClient(uri);
@@ -83,3 +80,5 @@ app.get('/products/:id', async (request, response) => {
 app.listen(PORT);
 
 console.log(`📡 Running on port ${PORT}`);
+
+// Voici mon adresse de server : https://server-nlsferrara.vercel.app/
